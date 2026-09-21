@@ -1,0 +1,8 @@
+﻿.env
+__pycache__/
+*.pyc
+ibvap.db
+events.json
+evidence/
+venv/
+.venv/

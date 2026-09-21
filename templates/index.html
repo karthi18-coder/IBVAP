@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IBVAP | Border Surveillance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div><span class="eyebrow">SIH 2026 / FIELD OPERATIONS</span><h1>IBVAP</h1></div>
+    <div class="system-state"><span class="pulse"></span><span id="mode">CONNECTING</span><small id="updated">Waiting for telemetry</small></div>
+  </header>
+  <section class="input-dock">
+    <div class="dock-heading"><div><span class="eyebrow">CCTV INPUT CONTROL</span><h2>Server-side CCTV monitoring</h2></div><span id="monitoring-banner" class="demo-banner">MONITORING OFF</span></div>
+    <div class="input-grid">
+      <section class="input-card"><div class="input-title"><span class="input-icon">CAM</span><div><h3>Laptop webcam</h3><small>Viewed by this dashboard and LAN clients</small></div></div><button id="start-camera" type="button">Start CCTV monitoring</button><button id="stop-camera" type="button" class="quiet">Stop monitoring</button></section>
+      <section class="input-card"><div class="input-title"><span class="input-icon">VID</span><div><h3>Sample CCTV Video</h3><small>Upload a prerecorded video for YOLO, tracking, and behaviour analysis</small></div></div><input id="cctv-video-file" type="file" accept=".mp4,.avi,.mov,.mkv,.webm"><small id="selected-video" class="form-message">No file selected</small><button id="upload-cctv-video" type="button">Upload &amp; Analyze</button></section>
+      <form id="rtsp-form" class="input-card"><div class="input-title"><span class="input-icon">IP</span><div><h3>IP CCTV / RTSP</h3><small>Server connects to the configured camera</small></div></div><input name="url" type="url" placeholder="rtsp://camera-url" required><button type="submit">Start CCTV</button></form>
+      <section class="input-card"><div class="input-title"><span class="input-icon">LAN</span><div><h3>Dashboard viewer</h3><small>Mobile browsers view this server feed; no phone camera access</small></div></div><small id="input-message" class="form-message">Camera not connected. Choose a source to begin.</small></section>
+    </div>
+  </section>
+  <main class="layout">
+    <section class="main-column">
+      <div class="section-heading"><div><span class="eyebrow">SECTOR A / CAMERA 01</span><h2>Live perimeter view</h2></div><span class="source" id="source">--</span></div>
+<div class="video-shell">
+  <img id="live-feed" alt="Live border surveillance camera feed">
+
+  <div class="fence-label">
+    NO ACTIVE SOURCE
+  </div>
+</div>
+
+<div class="zone-controls">
+
+  <button
+    id="draw-zone"
+    type="button">
+    Draw Restricted Zone
+  </button>
+
+  <button
+    id="save-zone"
+    type="button">
+    Save Zone
+  </button>
+
+  <button
+    id="clear-zone"
+    type="button"
+    class="quiet">
+    Clear Zone
+  </button>
+
+  <small id="zone-message" class="form-message">
+    Draw a restricted area on the CCTV feed.
+  </small>
+
+</div>
+      <div class="camera-meta"><span>CAMERA <b id="camera-id">CCTV-01</b></span><span>STATUS <b id="camera-status">IDLE</b></span><span>FPS <b id="fps">--</b></span></div>
+      <div class="metric-grid">
+        <div class="metric"><span>Detections</span><strong id="detections">0</strong><small>objects in frame</small></div>
+        <div class="metric"><span>People</span><strong id="people">0</strong><small>tracked persons</small></div>
+        <div class="metric"><span>Vehicles</span><strong id="vehicles">0</strong><small>tracked vehicles</small></div>
+        <div class="metric alert-metric"><span>Current alert</span><strong id="alerts">NONE</strong><small>live status</small></div>
+      </div>
+      <div class="analytics-panel">
+        <div class="section-heading compact"><div><span class="eyebrow">AI ANALYTICS</span><h2>Border risk summary</h2></div></div>
+        <div class="analytics-grid">
+          <div class="mini-stat"><span>Current movement</span><strong id="analytics-movement">STABLE</strong></div>
+          <div class="mini-stat"><span>Zone state</span><strong id="analytics-zone">NOT CONFIGURED</strong></div>
+          <div class="mini-stat"><span>People tracked</span><strong id="analytics-people">0</strong></div>
+          <div class="mini-stat"><span>Vehicles tracked</span><strong id="analytics-vehicles">0</strong></div>
+        </div>
+      </div>
+    </section>
+    <aside class="side-column">
+      <section class="panel"><div class="panel-heading"><h2>Tracked objects</h2><span class="live-tag">LIVE</span></div><div id="tracks" class="track-list"></div></section>
+      <section class="panel"><div class="panel-heading"><h2>Current alert</h2><span class="live-tag">LIVE</span></div><div id="events" class="event-list"></div></section>
+    </aside>
+  </main>
+  <script src="{{ url_for('static', filename='dashboard/app.js') }}"></script>
+</body>
+</html>
